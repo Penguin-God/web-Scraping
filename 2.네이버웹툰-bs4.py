@@ -1,0 +1,13 @@
+import requests
+from bs4 import BeautifulSoup
+
+url ="https://comic.naver.com/webtoon/weekday.nhn"
+res = requests.get(url)
+res.raise_for_status()
+
+soup = BeautifulSoup(res.text, "lxml") 
+
+#네이버 웹툰 전체목록 가져오가
+WebTonns = soup.find_all("a", attrs = {"class" : "title"}) # class = title인 모든 a태그 반환
+for WebToon in WebTonns:
+    print(WebToon.get_text())
