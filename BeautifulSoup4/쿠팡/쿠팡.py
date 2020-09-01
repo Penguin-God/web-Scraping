@@ -18,7 +18,7 @@ import re
 from bs4 import BeautifulSoup
 
 url = "https://www.coupang.com/np/search?q=%EB%85%B8%ED%8A%B8%EB%B6%81&channel=recent&component=&eventCategory=SRP&trcid=&traid=&sorter=scoreDesc&minPrice=&maxPrice=&priceRange=&filterType=&listSize=36&filter=&isPriceRange=false&brand=&offerCondition=&rating=0&page=1&rocketAll=false&searchIndexingToken=1=4&backgroundColor="
-# 그냥 들어가니까 안됨 그래서 User Agent값을 넣어서 사람이 접속하는 것처럼 보이게 하는 코드
+# 그냥 들어가니까 안됨 그래서 User Agent값을 넣어서 사람이 접속하는 것처럼 보이게 하는 코드를 작성함
 User_Agent_head = {"User-Agent" : "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36"}
 res = requests.get(url, headers = User_Agent_head)
 res.raise_for_status()
