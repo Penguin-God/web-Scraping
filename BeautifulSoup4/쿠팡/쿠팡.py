@@ -24,5 +24,36 @@ res = requests.get(url, headers = User_Agent_head)
 res.raise_for_status()
 soup = BeautifulSoup(res.text, "lxml")
 items = soup.find_all("li", attrs = {"class" : re.compile("^search-product")}) # search-product로 시작하는 class를 찾기 위해 정규식 개행 사용
-name = items[1].find("div" , attrs = {"class" : "name"}).get_text()
-print(name)
+# name = items[1].find("div" , attrs = {"class" : "name"}).get_text()
+#print(name)
+
+def 정보확인(상품정보):
+    if(상품정보):
+        상품정보 = 상품정보.get_text()
+    else:
+        상품정보 = "상품정보가 없습니다."
+    return 상품정보
+
+번수 = 1
+for item in items:
+    name = item.find("div" , attrs = {"class" : "name"}).get_text()
+    Price = item.find("strong", attrs = {"class" : "price-value"}).get_text()
+    평점 = item.find("em", attrs = {"class" : "rating"})
+    # if 평점:
+    #     평점 = 평점.get_text()
+    # else:
+    #     평점 = "평점 정보가 없습니다."
+    평점 = 정보확인(평점)
+
+    평점수 = item.find("span", attrs = {"class" : "rating-total-count"})
+    # if(평점수):
+    #     평점수 = 평점수.get_text()
+    # else:
+    #     평점수 = "평점수 정보가 없습니다."
+    평점수 = 정보확인(평점수)
+    
+    print(str(번수) + "번째" '\n'
+    "이름 :",  name, '\n' 
+    "가격 :",  Price, "  평점 :", 평점, "  평점수 :", 평점수, '\n')
+    번수 += 1
+    #print("가격 :",  Price, "  평점 :", 평점, "  평점수 :", 평점수, '\n')
