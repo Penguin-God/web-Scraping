@@ -5,7 +5,7 @@ url = "https://comic.naver.com/webtoon/list.nhn?titleId=637931&weekday=thu"
 res = requests.get(url)
 res.raise_for_status()
 
-soup = BeautifulSoup(res.text, "lxml") 
+soup = BeautifulSoup(res.text, "html5lib") 
 
 # 화면에 있는 전자오락수호대 제목과 링크 가져오가
 제목들 = soup.find_all("td", attrs = {"class" : "title"}) # find_all을 사용해서 조건에 맞는 태그가 전부 다 배열형태로 나옴
