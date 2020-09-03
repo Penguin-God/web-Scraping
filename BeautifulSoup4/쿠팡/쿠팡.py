@@ -30,22 +30,23 @@ items = soup.find_all("li", attrs = {"class" : re.compile("^search-product")}) #
 def 정보확인(상품정보):
     if(상품정보):
         상품정보 = 상품정보.get_text()
+        if("(" in 상품정보):
+            상품정보 = 상품정보[1:-1] # (13)식으로 출력되므로 0번째와 맨 마지막에 ()를 제외함 
     else:
         상품정보 = "상품정보가 없습니다."
     return 상품정보
 
-번수 = 1
+
 
 def 정보출력():
-    print(str(번수) + "번째" '\n'
-    "이름 :",  name, '\n' 
-    "가격 :",  Price, "  평점 :", 정보확인(평점), "  평점수 :", 정보확인(평점수), '\n')
+    return print(str(번수) + "번째" '\n' "이름 :",  name, '\n' "가격 :",  Price, "  평점 :", 평점, "  리뷰수 :", 리뷰수, '\n')
 
+번수 = 1
 for item in items:
     # 광고상품 제외
     광고상품 = item.find("span", attrs = {"class" : "ad-badge-text"})
     if(광고상품):
-        print("<광고상품입니다.>" '\n')
+        #print("<광고상품입니다.>" '\n')
         continue #다음반복문 실행
 
     # 리뷰 100개이상 평점 4.5점 이상만 불러오기
@@ -54,11 +55,16 @@ for item in items:
     Price = item.find("strong", attrs = {"class" : "price-value"}).get_text()
     평점 = item.find("em", attrs = {"class" : "rating"})
     평점 = 정보확인(평점)
-    평점수 = item.find("span", attrs = {"class" : "rating-total-count"})
-    평점수 = 정보확인(평점수) # (숫자)식으로 정보가 표기됨
-    if(평점 == "상품정보가 없습니다." or 평점수 == "상품정보가 없습니다."):
-        print("상품정보가 없습니다.")
+    리뷰수 = item.find("span", attrs = {"class" : "rating-total-count"})
+    리뷰수 = 정보확인(리뷰수) # (숫자)식으로 정보가 표기되기 때문에 int형으로 자료형을 바꾸기 위해 ()지워야함
+    
+    if(평점 == "상품정보가 없습니다." or 리뷰수 == "상품정보가 없습니다."):
+        #print("<상품정보가 없습니다>." '\n')
         continue
-    if(float(평점) >= 4.5 and int(평점수) >= 100):
-        print(정보출력)
-    #print("가격 :",  Price, "  평점 :", 평점, "  평점수 :", 평점수, '\n')
+    
+    # 평점이 4점이상이고 리뷰수는 30개 이상이고 LG것만 가져오기
+    if(float(평점) >= 4.0 and int(리뷰수) >= 30 and "LG전자" in name):
+        정보출력()
+        번수 += 1
+    # else:
+    #     print("상품정보가 부족합니다." '\n')
