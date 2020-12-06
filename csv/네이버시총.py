@@ -1,3 +1,4 @@
+# 네이버 시총 1등부터 50등까지 가져옴
 import csv
 from bs4 import BeautifulSoup
 import requests
@@ -5,8 +6,8 @@ import os
 
 url = 'https://finance.naver.com/sise/sise_market_sum.nhn?sosok=0&page=' # 맨뒤에 원하는 페이지를 붙여서 가지고오기
 
-script_dir = 'C:/Users/parkj/Desktop/프로그래밍/python/web-Scraping/csv'
 filename = "시가총액-200등.csv"
+script_dir = 'C:/Users/parkj/Desktop/프로그래밍/python/web-Scraping/csv'
 abs_file_path = os.path.join(script_dir, filename)
 f = open(abs_file_path, "w", encoding="utf-8-sig", newline="")
 writer = csv.writer(f)
