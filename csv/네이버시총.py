@@ -1,3 +1,4 @@
+# 네이버 시총 1등부터 50등까지 가져옴
 import csv
 from bs4 import BeautifulSoup
 import requests
