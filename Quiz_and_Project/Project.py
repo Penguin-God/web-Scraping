@@ -42,33 +42,56 @@ def Weather():
     print("현재 온도 : {} (최저 {}/ 최고 {})".format(current_Temperature, min_Temperatuer, max_Temperatuer))
     print("오전 {} / 오후 {}".format(rain_Percentage_Morning, rain_Percentage_After))
     print("오늘의 미세먼지 농도 : {},   초미세먼지 농도 : {}".format(미세먼지_농도, 초미세먼지_농도))
+    print()
+    print()
 
 def Headline_news():
     url = "https://news.naver.com/"
     soup = Creat_soup(url)
+    print("[헤드라인 뉴스]")
     news_list = soup.find("ul", attrs = {"class" : "hdline_article_list"}).find_all("li", limit = 3) # find_all쓰고 find쓰면 안됨, limit : 찾는 개수 제한
     for i in range(len(news_list)):
         news_data = news_list[i].find("a")
         title = news_data.get_text().strip()
         link = news_data["href"]
         Print_news(i, title, "https://news.naver.com/" + link)  
+    print()
 
 def It_news():
     url = 'https://news.naver.com/main/list.nhn?mode=LS2D&mid=shm&sid1=105&sid2=230'
     soup = Creat_soup(url)
+    print("[IT뉴스]")
     news_list = soup.find("ul", attrs = {"class" : "type06_headline"}).find_all("li", limit = 3)
-    for i in range(len(news_list)):
-        news_data = news_list[i].find_all("dt")[1].find("a")
-        title = news_data.get_text().strip()
-        link = news_data["href"]
-        Print_news(i, title, link) 
+    for index, news_data in enumerate(news_list):
+        img = news_data.find("img")
+        a_index = 0
+        if(img):
+            a_index = 1
+        title = news_data.find_all("a")[a_index].get_text().strip()
+        link = news_data.find_all("a")[a_index]["href"]
+        Print_news(index, title, link) 
+    print()
 
 def Print_news(index, title, link):
     print(str(index + 1) + "번째 기사")
     print(title)
-    print(link, "\n")  
+    print(link)
+
+def English_Proverb():
+    url = 'https://www.hackers.co.kr/?c=s_eng/eng_contents/B_others_wisesay&keywd=haceng_submain_lnb_eng_B_others_wisesay&logger_kw=haceng_submain_lnb_eng_B_others_wisesay#;'
+    soup = Creat_soup(url)
+    print("[해커스 어학원 회화]")
+    en_Proverb = soup.find("div", attrs = {"class" : "text_en"}).find("p").get_text()
+    ko_Proverb = soup.find("div", attrs = {"class" : "text_ko"}).find("p").get_text()
+    print("(영어지문)")
+    print(en_Proverb)
+    print()
+    print("(한글지문)")
+    print(ko_Proverb)
+    
 
 if(__name__ == '__main__'):
-    #Weather()
-    #Headline_news()
-    It_news()
+    Weather() # 오늘의 날씨 가져오기
+    Headline_news() # 네이버 해드라인 뉴스 3개 가져오기 
+    It_news() # It뉴스 3개 가져오기
+    English_Proverb() # 해커스 오늘의 영어 명언 가져오기
