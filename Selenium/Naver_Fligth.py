@@ -10,9 +10,10 @@ browser.get(url)
 
 def AirFly(start_filed, end_filed, start_day, end_day):
     browser.find_element_by_link_text("인천").click()
-    browser.find_elements_by_link_text(start_filed)[0].click() # [0] -> 이번달
+    browser.find_elements_by_link_text(start_filed)[0].click() # [0] -> 이번달 
     browser.find_element_by_link_text("도착").click()
     browser.find_elements_by_link_text(end_filed)[0].click() # [0] -> 이번달
+    # find_elements를 사용하면 여러개의 엘리먼트 정보를 가져올 수 있음
 
     browser.find_element_by_link_text("가는날 선택").click()
     browser.find_elements_by_link_text(start_day)[0].click() # [0] -> 이번달
