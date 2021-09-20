@@ -27,5 +27,7 @@ for page in range(1, 5):
         colums = row.find_all("td") # 모든 td를 가져옴
         if(len(colums) <= 1):
             continue # 의미없는 데이터는 스킵
+        # stript() : 공백 제거
         data = [colum.get_text().strip() for colum in colums] # td안의 text를 가져옴
+        print(data)
         writer.writerow(data) # csv file produce
